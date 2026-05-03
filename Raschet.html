@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Нумерология | Калькулятор Числа Сознания</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #0a0c12 0%, #0f1119 100%);
+            font-family: 'Inter', sans-serif;
+            color: #f0f3fc;
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        /* кастомный скролл */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #181e2a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4e6a8f;
+            border-radius: 12px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* типографика */
+        h1, h2 {
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .accent-gold {
+            background: linear-gradient(135deg, #f9e0a0, #dbb87c);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        /* header */
+        header {
+            padding: 32px 0 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(200, 180, 120, 0.2);
+        }
+
+        .logo {
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(145deg, #ffffff, #cdb38c);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.01em;
+        }
+
+        .logo-sub {
+            font-size: 0.85rem;
+            color: #9aaec9;
+            margin-top: 6px;
+            letter-spacing: 1px;
+        }
+
+        /* главный блок калькулятора */
+        .calculator-section {
+            padding: 48px 0 64px;
+        }
+
+        .card-glow {
+            background: rgba(18, 24, 36, 0.65);
+            backdrop-filter: blur(12px);
+            border-radius: 64px;
+            border: 1px solid rgba(210, 180, 110, 0.25);
+            padding: 40px 36px;
+            box-shadow: 0 25px 45px -12px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+        }
+
+        .input-group {
+            margin-bottom: 28px;
+        }
+
+        label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: #cbd9f0;
+            letter-spacing: 0.3px;
+        }
+
+        input {
+            width: 100%;
+            background: #0c1020;
+            border: 1.5px solid #2d3f55;
+            padding: 16px 20px;
+            border-radius: 48px;
+            color: #ffffff;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: 0.2s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #e4bc7c;
+            box-shadow: 0 0 0 3px rgba(228, 188, 124, 0.2);
+        }
+
+        .date-hint {
+            font-size: 0.75rem;
+            color: #8d9fbf;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-calculate {
+            background: linear-gradient(105deg, #2f455f, #1e2e42);
+            border: none;
+            padding: 16px 28px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: 0.25s;
+            color: #fff6e8;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn-calculate:hover {
+            background: linear-gradient(105deg, #3e5a7c, #26405c);
+            transform: translateY(-3px);
+            box-shadow: 0 14px 28px -8px rgba(0,0,0,0.5);
+        }
+
+        .result-area {
+            margin-top: 40px;
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 48px;
+            padding: 28px 32px;
+            text-align: center;
+            border-left: 3px solid #e4bc7c;
+            transition: 0.2s;
+        }
+
+        .conscious-number {
+            font-size: 5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #F7E5C2, #e6c48b);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            line-height: 1;
+            margin-bottom: 12px;
+        }
+
+        .number-description {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 16px auto 0;
+            color: #d3e2fc;
+        }
+
+        .interpretation {
+            margin-top: 24px;
+            font-size: 1rem;
+            background: rgba(40, 48, 70, 0.4);
+            border-radius: 40px;
+            padding: 20px 24px;
+            text-align: left;
+        }
+
+        .tg-button-block {
+            text-align: center;
+            margin: 48px 0 40px;
+        }
+
+        .btn-telegram {
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            background: #1f3b4c;
+            border: 1px solid #68b5e0;
+            padding: 16px 42px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: #ffffff;
+            text-decoration: none;
+            transition: 0.25s;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 5px 15px rgba(0, 100, 150, 0.2);
+        }
+
+        .btn-telegram i {
+            font-size: 1.7rem;
+            color: #2aa4e0;
+        }
+
+        .btn-telegram:hover {
+            background: #2f5770;
+            transform: scale(1.02);
+            border-color: #8dcbff;
+            box-shadow: 0 10px 25px -5px #1e88c280;
+        }
+
+        footer {
+            padding: 32px 0;
+            text-align: center;
+            color: #7186a8;
+            font-size: 0.8rem;
+            border-top: 1px solid rgba(120, 130, 160, 0.15);
+            margin-top: 20px;
+        }
+
+        .error-msg {
+            color: #f4ba7a;
+            font-size: 0.9rem;
+            margin-top: 12px;
+        }
+
+        @media (max-width: 680px) {
+            .card-glow {
+                padding: 28px 20px;
+            }
+            .conscious-number {
+                font-size: 3.5rem;
+            }
+            .btn-telegram {
+                padding: 12px 24px;
+                font-size: 1rem;
+            }
+        }
+
+        .info-note {
+            font-size: 0.85rem;
+            text-align: center;
+            margin-top: 28px;
+            color: #97abcc;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <div class="logo">✦ ЧИСЛО СОЗНАНИЯ ✦</div>
+        <div class="logo-sub">нумерологический расчёт • код вашей внутренней сути</div>
+    </div>
+</header>
+
+<main>
+    <div class="container calculator-section">
+        <div class="card-glow">
+            <h2 style="text-align: center; font-size: 1.8rem; margin-bottom: 8px;">Калькулятор <span class="accent-gold">Числа Сознания</span></h2>
+            <p style="text-align: center; margin-bottom: 32px; color: #bdd0ec;">Введите дату рождения, чтобы узнать число, определяющее ваш внутренний мир и жизненный вектор.</p>
+
+            <div class="input-group">
+                <label><i class="fas fa-calendar-alt" style="margin-right: 8px;"></i> Дата рождения</label>
+                <input type="date" id="birthDate" value="1995-06-15">
+                <div class="date-hint">
+                    <i class="fas fa-moon"></i> 
+                    <span>Нумерологический расчёт сводит день, месяц и год к однозначному числу (1–9) или мастер-числам 11, 22</span>
+                </div>
+            </div>
+
+            <button id="calcBtn" class="btn-calculate"><i class="fas fa-gem"></i> РАССЧИТАТЬ ЧИСЛО СОЗНАНИЯ <i class="fas fa-spa"></i></button>
+
+            <div id="resultBox" class="result-area" style="display: none;">
+                <div style="font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; opacity: 0.7;">ваше число сознания</div>
+                <div class="conscious-number" id="consciousNumber">—</div>
+                <div class="number-description" id="consciousDesc"></div>
+                <div class="interpretation" id="consciousInterpret"></div>
+            </div>
+
+            <div id="errorMsg" class="error-msg" style="text-align: center;"></div>
+        </div>
+
+        <!-- Блок с кнопкой перехода в Telegram канал (ссылка из задания) -->
+        <div class="tg-button-block">
+            <a href="https://t.me/@Ludmila"_blank" rel="noopener noreferrer" class="btn-telegram">
+                <i class="fab fa-telegram-plane"></i> ПЕРЕЙТИ В ЛИЧНЫЕ СООБЩЕНИЯ
+                <i class="fas fa-arrow-right"></i>
+            </a>
+            <div class="info-note">
+                <i class="fas fa-comment-dots"></i> Приходи ко мне на личную консультацию.
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div class="container">
+        <p>✦ Нумерологический расчёт числа сознания на основе полной даты рождения ✦</p>
+        <p style="margin-top: 8px;">Вселенные числа открывают путь к самопознанию</p>
+    </div>
+</footer>
+
+<script>
+    // Функция для вычисления числа сознания в нумерологии:
+    // Число Сознания (также известное как Число Души или Число Жизненного Пути в некоторых школах) =
+    // многократное редуцирование полной даты рождения до однозначного (или мастер-числа 11, 22)
+    // Правило: суммируем все цифры дня, месяца, года, затем складываем до тех пор, пока не получим 1..9 или 11,22.
+    // В классической нумерологии число сознания характеризует внутренние мотивы.
+    
+    function reduceToRootOrMaster(num) {
+        // если уже мастер-число 11,22 — не редуцируем, но если сумма стала 11 или 22 при первом проходе, возвращаем.
+        // однако алгоритм: получаем промежуточную сумму, если равно 11 или 22 — стоп.
+        if (num === 11 || num === 22) return num;
+        // редукция к числу от 1 до 9
+        while (num > 9 && num !== 11 && num !== 22) {
+            let sum = 0;
+            let temp = num;
+            while (temp > 0) {
+                sum += temp % 10;
+                temp = Math.floor(temp / 10);
+            }
+            num = sum;
+            if (num === 11 || num === 22) break;
+        }
+        return num;
+    }
+
+    // Основная функция расчёта числа сознания из даты в формате "YYYY-MM-DD"
+    function calculateConsciousNumber(dateString) {
+        if (!dateString) return null;
+        const parts = dateString.split('-');
+        if (parts.length !== 3) return null;
+        const year = parseInt(parts[0], 10);
+        const month = parseInt(parts[1], 10);
+        const day = parseInt(parts[2], 10);
+        if (isNaN(year) || isNaN(month) || isNaN(day)) return null;
+        if (month < 1 || month > 12 || day < 1 || day > 31) return null;
+        // базовая сумма: день + месяц + год
+        let sum = day + month + year;
+        // редуцируем до мастера или базового числа
+        let result = reduceToRootOrMaster(sum);
+        return result;
+    }
+
+    // Детальное описание чисел сознания (нумерологическая трактовка)
+    function getNumberDescription(number) {
+        const descriptions = {
+            1: "Лидерство, независимость, инициатива. Вы — первооткрыватель, способный вести за собой. Ваше сознание стремится к самореализации и смелым начинаниям.",
+            2: "Дипломатичность, чуткость, гармония. Вы рождены для партнёрства и баланса. Интуиция и мягкость — ваши главные союзники.",
+            3: "Творчество, радость, самовыражение. Ваше сознание наполнено вдохновением. Общение и искусство приносят внутренний свет.",
+            4: "Стабильность, порядок, дисциплина. Вы строите надёжный фундамент. Сознание ценит честность, усердие и практичность.",
+            5: "Свобода, приключения, изменения. Вас ведёт жажда нового. Живой ум и любопытство открывают горизонты.",
+            6: "Ответственность, забота, семья. Гармония в доме и любовь к ближним — доминанта вашего сознания. Вы — опора для других.",
+            7: "Мудрость, анализ, духовность. Тяга к знаниям и внутреннему поиску. Ваше сознание ищет истину и глубину.",
+            8: "Сила, материальный успех, амбиции. Вы рождены для достижений и власти. Управление ресурсами и карма лидера.",
+            9: "Гуманизм, завершение, сострадание. Широта души и альтруизм. Ваше сознание ведёт к служению миру и мудрости.",
+            11: "Мастер-интуиция, просветление, вдохновение. Вы обладаете обострённой чувствительностью и даром наставничества. Высокая духовная вибрация.",
+            22: "Мастер-строитель, глобальные проекты, преобразование реальности. Способность воплощать мечты в материальный мир и влиять на общество."
+        };
+        return descriptions[number] || "Уникальная вибрация. Исследуйте свою природу глубже.";
+    }
+
+    // Дополнительная интерпретация / совет
+    function getInterpretation(number) {
+        const interpretations = {
+            1: "✨ Совет: верьте в свои начинания и не бойтесь быть первыми. Ваша сила — в уникальности.",
+            2: "🤝 Баланс и дипломатия приведут к успеху. Учитесь доверять партнёрам.",
+            3: "🎨 Раскройте творческий потенциал. Делитесь своим светом с окружающими.",
+            4: "🏛️ Системность и усердие создадут прочную основу. Уважайте традиции и порядок.",
+            5: "🌍 Путешествия и перемены — ваша стихия. Используйте свободу осознанно.",
+            6: "💖 Любовь и забота исцеляют мир. Помните и о себе, не только о других.",
+            7: "🔍 Ищите знания внутри себя. Практикуйте медитацию и уединение для ясности.",
+            8: "💰 Управляйте энергией изобилия. Ваш успех приумножается через честность и труд.",
+            9: "🌟 Завершайте старое, чтобы открыть новое. Прощение и сострадание расширяют сознание.",
+            11: "🔮 Вы — проводник света. Используйте интуицию во благо и избегайте эмоционального выгорания.",
+            22: "🏗️ Ваше предназначение — созидать нечто монументальное. Материализуйте мечты с мудростью."
+        };
+        return interpretations[number] || "Слушайте внутренний голос, он ведёт к гармонии.";
+    }
+
+    // Валидация даты (дополнительно) и отображение результата
+    const dateInput = document.getElementById('birthDate');
+    const calcButton = document.getElementById('calcBtn');
+    const resultBox = document.getElementById('resultBox');
+    const consciousNumberSpan = document.getElementById('consciousNumber');
+    const consciousDescSpan = document.getElementById('consciousDesc');
+    const consciousInterpretSpan = document.getElementById('consciousInterpret');
+    const errorMsgSpan = document.getElementById('errorMsg');
+
+    function updateResult() {
+        // скрываем предыдущие сообщения
+        errorMsgSpan.innerHTML = '';
+        const dateValue = dateInput.value;
+        if (!dateValue) {
+            errorMsgSpan.innerHTML = '⚠️ Пожалуйста, выберите дату рождения.';
+            resultBox.style.display = 'none';
+            return;
+        }
+        const consciousNum = calculateConsciousNumber(dateValue);
+        if (consciousNum === null) {
+            errorMsgSpan.innerHTML = '❌ Некорректная дата. Проверьте день, месяц и год.';
+            resultBox.style.display = 'none';
+            return;
+        }
+        // отображаем результат
+        consciousNumberSpan.innerText = consciousNum;
+        const description = getNumberDescription(consciousNum);
+        consciousDescSpan.innerText = description;
+        const interpretationText = getInterpretation(consciousNum);
+        consciousInterpretSpan.innerHTML = `<i class="fas fa-star-of-life" style="margin-right: 8px; color: #e4bc7c;"></i> ${interpretationText}`;
+        resultBox.style.display = 'block';
+        // плавный скролл к результату
+        setTimeout(() => {
+            resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 100);
+    }
+
+    // событие по кнопке
+    calcButton.addEventListener('click', updateResult);
+    // также запуск при загрузке страницы для дефолтной даты (1995-06-15)
+    window.addEventListener('DOMContentLoaded', () => {
+        // установим сегодняшнюю дату? но можно оставить по умолчанию: 1995-06-15 (пример)
+        // Для удобства оставляем значение по умолчанию из input (1995-06-15) сразу рассчитаем.
+        if(dateInput.value === "") {
+            // если пусто зададим пример
+            dateInput.value = "1995-06-15";
+        }
+        updateResult();
+    });
+
+    // дополнительная проверка на ввод даты: при изменении даты по желанию автоматом можно пересчитать, но по кнопке тоже ок
+    dateInput.addEventListener('change', () => {
+        // опционально очистим ошибку, но не пересчитываем без кнопки (удобно)
+        errorMsgSpan.innerHTML = '';
+        resultBox.style.display = 'none';
+    });
+</script>
+</body>
+</html>
