@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Нумерология | Число Сознания 1-9</title>
+    <title>Нумерология | Число Сознания</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -90,6 +90,7 @@
             margin-bottom: 32px;
         }
 
+        /* Золотая подсказка — без смайликов рук */
         .golden-hint {
             font-size: 1.25rem;
             font-weight: 500;
@@ -98,22 +99,17 @@
             -webkit-background-clip: text;
             color: transparent;
             text-align: center;
-            margin-bottom: 18px;
+            margin-bottom: 12px;
             letter-spacing: 0.5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
         }
 
-        .golden-hint i {
+        /* Отдельная строка со стрелкой вниз (одна) */
+        .arrow-down {
+            text-align: center;
+            font-size: 1.5rem;
             color: #e4bc7c;
-            font-size: 1.3rem;
-            background: none;
-            -webkit-background-clip: unset;
-            background-clip: unset;
-            color: #e4bc7c;
+            margin-bottom: 18px;
+            opacity: 0.9;
         }
 
         .short-date-input {
@@ -291,7 +287,9 @@
             }
             .golden-hint {
                 font-size: 1rem;
-                gap: 6px;
+            }
+            .arrow-down {
+                font-size: 1.2rem;
             }
             .short-date-input {
                 width: 220px;
@@ -322,11 +320,13 @@
             <h2 style="text-align: center; font-size: 1.8rem; margin-bottom: 8px;">Калькулятор <span class="accent-gold">Числа Сознания</span></h2>
             <p style="text-align: center; margin-bottom: 32px; color: #bdd0ec;">Введите дату рождения, чтобы узнать число сознания (от 1 до 9), определяющее ваш внутренний мир.</p>
 
+            <!-- Блок ввода: текстовая подсказка без смайликов, отдельная стрелка -->
             <div class="date-wrapper">
                 <div class="golden-hint">
-                    <i class="fas fa-arrow-down"></i> 
-                    <span> нажмите на строку для ввода даты рождения </span>
-                    <i class="fas fa-arrow-down"></i>
+                    нажмите на строку для ввода даты рождения
+                </div>
+                <div class="arrow-down">
+                    ↓
                 </div>
                 <div class="short-date-input">
                     <input type="date" id="birthDate" value="1995-06-15">
@@ -375,13 +375,9 @@
 <script>
     /**
      * Функция редуцирует любое число до однозначного (от 1 до 9).
-     * В отличие от предыдущей версии, мастер-числа 11 и 22 НЕ сохраняются,
-     * а также дополнительно редуцируются: 11 -> 2, 22 -> 4.
-     * Это соответствует классическому "Числу Сознания" в некоторых нумерологических школах,
-     * где результат всегда однозначный.
+     * Мастер-числа 11 и 22 дополнительно редуцируются: 11 -> 2, 22 -> 4.
      */
     function reduceToSingleDigit(num) {
-        // Продолжаем редукцию, пока число не станет от 1 до 9
         while (num > 9) {
             let sum = 0;
             let temp = num;
@@ -395,8 +391,7 @@
     }
 
     /**
-     * Основная функция расчёта числа сознания из даты в формате "YYYY-MM-DD"
-     * Алгоритм: суммируем день + месяц + год, затем редуцируем до однозначного числа 1-9.
+     * Расчёт числа сознания из даты в формате "YYYY-MM-DD"
      */
     function calculateConsciousNumber(dateString) {
         if (!dateString) return null;
@@ -408,16 +403,11 @@
         if (isNaN(year) || isNaN(month) || isNaN(day)) return null;
         if (month < 1 || month > 12 || day < 1 || day > 31) return null;
         
-        // Суммируем день, месяц и год
         let sum = day + month + year;
-        // Редуцируем до однозначного числа (1-9)
         let result = reduceToSingleDigit(sum);
         return result;
     }
 
-    /**
-     * Детальное описание чисел сознания (для значений 1-9)
-     */
     function getNumberDescription(number) {
         const descriptions = {
             1: "Лидерство, независимость, инициатива. Вы — первооткрыватель, способный вести за собой. Ваше сознание стремится к самореализации и смелым начинаниям.",
@@ -433,9 +423,6 @@
         return descriptions[number] || "Уникальная вибрация. Исследуйте свою природу глубже.";
     }
 
-    /**
-     * Дополнительная интерпретация / совет для чисел 1-9
-     */
     function getInterpretation(number) {
         const interpretations = {
             1: "✨ Совет: верьте в свои начинания и не бойтесь быть первыми. Ваша сила — в уникальности.",
@@ -451,7 +438,6 @@
         return interpretations[number] || "Слушайте внутренний голос, он ведёт к гармонии.";
     }
 
-    // DOM элементы
     const dateInput = document.getElementById('birthDate');
     const calcButton = document.getElementById('calcBtn');
     const resultBox = document.getElementById('resultBox');
@@ -460,11 +446,7 @@
     const consciousInterpretSpan = document.getElementById('consciousInterpret');
     const errorMsgSpan = document.getElementById('errorMsg');
 
-    /**
-     * Основная функция обновления результата
-     */
     function updateResult() {
-        // Очищаем предыдущие ошибки
         errorMsgSpan.innerHTML = '';
         const dateValue = dateInput.value;
         
@@ -482,25 +464,20 @@
             return;
         }
         
-        // Убедимся, что число в диапазоне 1-9 (на всякий случай)
         const finalNumber = Math.min(9, Math.max(1, consciousNum));
         
-        // Отображаем результат
         consciousNumberSpan.innerText = finalNumber;
         consciousDescSpan.innerText = getNumberDescription(finalNumber);
         consciousInterpretSpan.innerHTML = `<i class="fas fa-star-of-life" style="margin-right: 8px; color: #e4bc7c;"></i> ${getInterpretation(finalNumber)}`;
         resultBox.style.display = 'block';
         
-        // Плавный скролл к результату
         setTimeout(() => {
             resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }, 100);
     }
 
-    // Обработчики событий
     calcButton.addEventListener('click', updateResult);
     
-    // Загрузка страницы: если поле пустое, ставим дефолтную дату и рассчитываем
     window.addEventListener('DOMContentLoaded', () => {
         if (dateInput.value === "") {
             dateInput.value = "1995-06-15";
@@ -508,7 +485,6 @@
         updateResult();
     });
     
-    // При изменении даты скрываем старый результат, чтобы не вводить в заблуждение
     dateInput.addEventListener('change', () => {
         errorMsgSpan.innerHTML = '';
         resultBox.style.display = 'none';
